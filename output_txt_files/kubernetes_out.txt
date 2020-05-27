@@ -1,0 +1,63 @@
+iMyke:~/environment/operationalize-ML-api (master) $ minikube ssh
+docker@minikube:~$ docker images
+REPOSITORY                                TAG                 IMAGE ID            CREATED             SIZE
+imykel/operationalized-ml-api             latest              13b3e9859c92        19 hours ago        1.3GB
+kubernetesui/dashboard                    v2.0.0              8b32422733b3        5 weeks ago         222MB
+k8s.gcr.io/kube-proxy                     v1.18.2             0d40868643c6        5 weeks ago         117MB
+k8s.gcr.io/kube-scheduler                 v1.18.2             a3099161e137        5 weeks ago         95.3MB
+k8s.gcr.io/kube-controller-manager        v1.18.2             ace0a8c17ba9        5 weeks ago         162MB
+k8s.gcr.io/kube-apiserver                 v1.18.2             6ed75ad404bd        5 weeks ago         173MB
+k8s.gcr.io/pause                          3.2                 80d28bedfe5d        3 months ago        683kB
+k8s.gcr.io/coredns                        1.6.7               67da37a9a360        3 months ago        43.8MB
+k8s.gcr.io/etcd                           3.4.3-0             303ce5db0e90        7 months ago        288MB
+kubernetesui/metrics-scraper              v1.0.2              3b08661dc379        7 months ago        40.1MB
+gcr.io/k8s-minikube/storage-provisioner   v1.8.1              4689081edb10        2 years ago         80.8MB
+docker@minikube:~$ exit
+logout
+iMyke:~/environment/operationalize-ML-api (master) $ kubectl get pods
+NAME   READY   STATUS    RESTARTS   AGE
+app    1/1     Running   0          13m
+app2   1/1     Running   0          11m
+iMyke:~/environment/operationalize-ML-api (master) $ kubectl port-forward app 8000:80
+Forwarding from 127.0.0.1:8000 -> 80
+Forwarding from [::1]:8000 -> 80
+Handling connection for 8000
+Handling connection for 8000
+Handling connection for 8000
+^CiMyke:~/environment/operationalize-ML-api (master) $ kubectl logs app
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: Do not use the development server in a production environment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:80/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 320-769-583
+[2020-05-27 17:07:26,928] INFO in app: JSON payload: 
+{'CHAS': {'0': 0}, 'RM': {'0': 6.575}, 'TAX': {'0': 296.0}, 'PTRATIO': {'0': 15.3}, 'B': {'0': 396.9}, 'LSTAT': {'0': 4.98}}
+[2020-05-27 17:07:26,945] INFO in app: Inference payload DataFrame: 
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2020-05-27 17:07:26,956] INFO in app: Scaling Payload: 
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+127.0.0.1 - - [27/May/2020 17:07:26] "POST /predict HTTP/1.1" 200 -
+[2020-05-27 17:07:39,480] INFO in app: JSON payload: 
+{'CHAS': {'0': 0}, 'RM': {'0': 6.575}, 'TAX': {'0': 296.0}, 'PTRATIO': {'0': 15.3}, 'B': {'0': 396.9}, 'LSTAT': {'0': 4.98}}
+[2020-05-27 17:07:39,492] INFO in app: Inference payload DataFrame: 
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2020-05-27 17:07:39,502] INFO in app: Scaling Payload: 
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+127.0.0.1 - - [27/May/2020 17:07:39] "POST /predict HTTP/1.1" 200 -
+[2020-05-27 17:09:01,936] INFO in app: JSON payload: 
+{'CHAS': {'0': 0}, 'RM': {'0': 6.575}, 'TAX': {'0': 296.0}, 'PTRATIO': {'0': 15.3}, 'B': {'0': 396.9}, 'LSTAT': {'0': 4.98}}
+[2020-05-27 17:09:01,953] INFO in app: Inference payload DataFrame: 
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2020-05-27 17:09:01,963] INFO in app: Scaling Payload: 
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+127.0.0.1 - - [27/May/2020 17:09:01] "POST /predict HTTP/1.1" 200 -
