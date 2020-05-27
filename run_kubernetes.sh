@@ -3,4 +3,3 @@
 #docker path
 dockerpath="imykel/operationalized-ml-api"
 
-kubectl run 
