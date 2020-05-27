@@ -7,8 +7,7 @@ install:
 	pip install -r requirements.txt
 
 lint:
-	hadolint --ignore 3000 --ignore 3013
-	hadolint Dockerfile
+	hadolint --ignore DL3013 Dockerfile
 	pylint --disable=R,C,W1203 app.py
 
 all: install lint 
