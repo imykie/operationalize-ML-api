@@ -5,6 +5,7 @@ WORKDIR /app
 
 # Copy ML-API to app
 COPY . app.py /app/
+COPY . model_data /app/
 
 # Install dependencies
 RUN pip install --upgrade pip && \
