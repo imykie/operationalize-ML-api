@@ -10,4 +10,5 @@ kubectl run ml-microservice --generator=run-pod/v1 --image=imykel/operationalize
 kubectl get pods
 
 # Forward the container port to host 
-kubectl port-forward ml-api 8000:80
+export POD_NAME=$(kubectl get pod -l app=ml-microservice -o jsonpath="{.items[0].metadata.name}")
+kubectl port-forward $POD_NAME 8000:80
